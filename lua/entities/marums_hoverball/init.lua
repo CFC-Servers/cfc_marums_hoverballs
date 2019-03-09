@@ -53,6 +53,9 @@ function ENT:PhysicsUpdate()
 	local force = 0
 	local phys = self:GetPhysicsObject()
 	local detectmask = self.mask
+	
+	if not ( self.damping and self.rotdamping ) then return end
+	
 	phys:SetDamping( self.damping, self.rotdamping )
 	local tr = util.TraceLine( {
 	start = self:GetPos(),
