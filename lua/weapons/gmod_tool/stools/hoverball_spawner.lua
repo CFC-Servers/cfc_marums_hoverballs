@@ -1,13 +1,13 @@
-TOOL.Category = "Construction"
-TOOL.Name = "Marums HoverBall Wire"
+TOOL.Category = "Posing"
+TOOL.Name = "Wire Marums HoverBall"
 TOOL.Command = nil
 TOOL.ConfigName = "" --Setting this means that you do not have to create external configuration files to define the layout of the tool config-hud
 
---TOOL.ClientConVar[ "force" ] = "100"
---TOOL.ClientConVar[ "height" ] = "100"
---TOOL.ClientConVar[ "air_resistance" ] = "2"
---TOOL.ClientConVar[ "angular_damping" ] = "10"
---TOOL.ClientConVar[ "detects_water" ] = "true"
+TOOL.ClientConVar[ "force" ] = "100"
+TOOL.ClientConVar[ "height" ] = "100"
+TOOL.ClientConVar[ "air_resistance" ] = "2"
+TOOL.ClientConVar[ "angular_damping" ] = "10"
+TOOL.ClientConVar[ "detects_water" ] = "true"
 TOOL.ClientConVar[ "model" ] = "models/dav0r/hoverball.mdl"
 
 local ConVarsDefault = TOOL:BuildConVarList()

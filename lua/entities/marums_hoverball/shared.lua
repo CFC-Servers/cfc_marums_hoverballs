@@ -5,7 +5,7 @@ else
 	ENT.Base			= "base_gmodentity"
 end
 
-ENT.Category = "Marums pack"
+ENT.Category = "Marums pack Wire Rendition"
 
 ENT.PrintName= "Marums Hoverball Wire Rendition"
 ENT.Author= "Marum, Logica"
