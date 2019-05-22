@@ -1,29 +1,15 @@
 AddCSLuaFile( "cl_init.lua" ) -- Make sure clientside
 AddCSLuaFile( "shared.lua" )  -- and shared scripts are sent.
- 
 include('shared.lua')
- 
-function ENT:Initialize()
 
-	--self:SetModel( "models/dav0r/hoverball.mdl" )
-	--self:SetModel( self.model )
+function ENT:Initialize()
+    self.wireCInputs = { "Hover Distance", "Hover Force", "Damping", "Rotation Damping", "Detect Water"}
 	self:PhysicsInit( SOLID_VPHYSICS )      -- Make us work with physics,
 	self:SetMoveType( MOVETYPE_VPHYSICS )   -- after all, gmod is a physics
 	self:SetSolid( SOLID_VPHYSICS )         -- Toolbox
 	self:SetCollisionGroup(COLLISION_GROUP_DISSOLVING)
 	self.delayedForce = 0
-	--self.hoverdistance = cvars.Number( "mhb_height" )
-	--self.hoverforce = cvars.Number( "mhb_force" )
-	--self.damping = cvars.Number( "mhb_air_resistance" )
-	--self.rotdamping = cvars.Number( "mhb_angular_damping" )
-	--self.detectswater = cvars.Bool( "mhb_detects_water" )
 	self.mask = MASK_NPCWORLDSTATIC
-	--self.constrainedEntities = constraint.GetAllConstrainedEntities( self )
-	--if (istable(self.constrainedEntities)) then
-	--	table.insert(self.constrainedEntities, self)
-	--else
-	--	--self.constrainedEntities = {self}
-	--end
 	if (self.detectswater) then
 		self.mask = self.mask+MASK_WATER
 	end
@@ -33,18 +19,11 @@ function ENT:Initialize()
 		phys:SetDamping( 0.4, 1 )
 		phys:SetMass(50)
 	end
-end
 
---function ENT:Think()
---	self.constrainedEntities = constraint.GetAllConstrainedEntities( self )
---	if (istable(self.constrainedEntities)) then
---		table.insert(self.constrainedEntities, self)
---	else
---		self.constrainedEntities = {self}
---	end
---	self:NextThink(CurTime()+1)
---	return true
---end
+    if WireLib then
+        self.Inputs = WireLib.CreateInputs( self.Entity, self.wireCInputs)
+        
+end
 
 function ENT:PhysicsUpdate()
 
@@ -53,9 +32,9 @@ function ENT:PhysicsUpdate()
 	local force = 0
 	local phys = self:GetPhysicsObject()
 	local detectmask = self.mask
-	
+
 	if not ( self.damping and self.rotdamping ) then return end
-	
+
 	phys:SetDamping( self.damping, self.rotdamping )
 	local tr = util.TraceLine( {
 	start = self:GetPos(),
@@ -65,14 +44,14 @@ function ENT:PhysicsUpdate()
 	} )
 
 	local distance = self:GetPos():Distance(tr.HitPos)
-	
+
 	if (distance < hoverdistance) then
 		force = -(distance-hoverdistance)*hoverforce
 		phys:ApplyForceCenter(Vector(0,0,-phys:GetVelocity().z*8))
 	else
 		force = 0
 	end
-	
+
 	if (force > self.delayedForce) then
 		self.delayedForce = (self.delayedForce*2+force)/3
 	else

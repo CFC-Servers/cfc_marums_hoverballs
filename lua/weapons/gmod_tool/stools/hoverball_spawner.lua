@@ -1,13 +1,13 @@
 TOOL.Category = "Construction"
-TOOL.Name = "Marums HoverBall"
+TOOL.Name = "Marums HoverBall Wire"
 TOOL.Command = nil
-TOOL.ConfigName = "" --Setting this means that you do not have to create external configuration files to define the layout of the tool config-hud 
+TOOL.ConfigName = "" --Setting this means that you do not have to create external configuration files to define the layout of the tool config-hud
 
-TOOL.ClientConVar[ "force" ] = "100"
-TOOL.ClientConVar[ "height" ] = "100"
-TOOL.ClientConVar[ "air_resistance" ] = "2"
-TOOL.ClientConVar[ "angular_damping" ] = "10"
-TOOL.ClientConVar[ "detects_water" ] = "true"
+--TOOL.ClientConVar[ "force" ] = "100"
+--TOOL.ClientConVar[ "height" ] = "100"
+--TOOL.ClientConVar[ "air_resistance" ] = "2"
+--TOOL.ClientConVar[ "angular_damping" ] = "10"
+--TOOL.ClientConVar[ "detects_water" ] = "true"
 TOOL.ClientConVar[ "model" ] = "models/dav0r/hoverball.mdl"
 
 local ConVarsDefault = TOOL:BuildConVarList()
@@ -22,7 +22,7 @@ function TOOL:LeftClick( trace )
 		entity.damping = 			self:GetClientNumber( "air_resistance" )
 		entity.rotdamping = 		self:GetClientNumber( "angular_damping" )
 		entity.detectswater = 		self:GetClientNumber( "detects_water" )
-		entity:SetModel(			self:GetClientInfo(   "model" ) )
+		entity:SetModel(	self:GetClientInfo( "model" ) )
 		entity:Spawn()
 		if (IsValid(trace.Entity)) then
 			local weld = constraint.Weld( entity, trace.Entity, 0, trace.PhysicsBone, 0, true , false )
@@ -35,7 +35,13 @@ function TOOL:LeftClick( trace )
 end
 
 function TOOL:RightClick( trace )
-	
+    if(trace.Hit) then
+        local enti = trace.Entity
+        if(enti and IsValid(enti) and !enti:isPlayer()) then
+            self:GetOwner():ChatPrint("Hoverball Model is now set to: " .. enti:GetModel())
+            TOOL.ClientConVar[ "model" ] = enti
+        end
+    end
 end
 
 function TOOL.BuildCPanel( panel )
@@ -44,8 +50,6 @@ function TOOL.BuildCPanel( panel )
 
 	panel:AddControl( "PropSelect", { Label = "Model", ConVar = "hoverball_spawner_model", Models = list.Get( "MarumsHoverballModels" ), Height = 5 } )
 
-	panel:AddControl("Header", { Text = "Client Options", Description = "HoverBall Settings" })
- 
 	panel:AddControl("Slider", {
 	    Label = "Force",
 	    Type = "Float",
@@ -53,7 +57,7 @@ function TOOL.BuildCPanel( panel )
 	    Max = "1000",
 	    Command = "hoverball_spawner_force"
 	})
-	
+
 	panel:AddControl("Slider", {
 	    Label = "Height",
 	    Type = "Float",
@@ -61,7 +65,6 @@ function TOOL.BuildCPanel( panel )
 	    Max = "1500",
 	    Command = "hoverball_spawner_height"
 	})
-
 	panel:AddControl("Slider", {
 	    Label = "Air Resistance",
 	    Type = "Float",
@@ -69,7 +72,6 @@ function TOOL.BuildCPanel( panel )
 	    Max = "30",
 	    Command = "hoverball_spawner_air_resistance"
 	})
-	
 	panel:AddControl("Slider", {
 	    Label = "Angular Damping",
 	    Type = "Float",
@@ -77,23 +79,22 @@ function TOOL.BuildCPanel( panel )
 	    Max = "100",
 	    Command = "hoverball_spawner_angular_damping"
 	})
-
 	panel:AddControl("checkbox", {
 		Label = "Hovers over water",
 		Command = "hoverball_spawner_detects_water"
 	})
 end
 
-function toolGunEffect( trace, self ) 
+function toolGunEffect( trace, self )
     local effectdata = EffectData()
 	effectdata:SetOrigin( trace.HitPos )
 	effectdata:SetStart( self:GetOwner():GetShootPos() )
 	util.Effect( "ToolTracer", effectdata )
-end 
+end
 if (CLIENT) then
 language.Add( "tool.hoverball_spawner.name", "Marum's Hoverball" )
 language.Add( "tool.hoverball_spawner.desc", "These hoverballs go up and down ramps and hills, like hovercrafts." )
-language.Add( "tool.hoverball_spawner.0", "Left-click: Spawn a hoverball. Spawn on an entity to weld it." )
+language.Add( "tool.hoverball_spawner.0", "Left-click: Spawn a hoverball. Spawn on an entity to weld it. Right-click to set a model." )
 language.Add( "undone.hoverball_spawner", "Undone Marum's hoverball" )
 end
 
