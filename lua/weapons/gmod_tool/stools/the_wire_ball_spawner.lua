@@ -47,7 +47,7 @@ function TOOL.BuildCPanel( panel )
 
 	panel:AddControl("Header", { Text = "Client Options", Description = "HoverBall Model" })
 
-	panel:AddControl( "PropSelect", { Label = "Model", ConVar = "hoverball_spawner_model", Models = list.Get( "MarumsHoverballModels" ), Height = 5 } )
+	panel:AddControl( "PropSelect", { Label = "Model", ConVar = "the_wire_ball_spawner_model", Models = list.Get( "MarumsHoverballModels" ), Height = 5 } )
 
 	panel:AddControl("Header", { Text = "Client Options", Description = "HoverBall Settings" })
 
@@ -56,7 +56,7 @@ function TOOL.BuildCPanel( panel )
 	    Type = "Float",
 	    Min = "0",
 	    Max = "2500",
-	    Command = "hoverball_spawner_force"
+	    Command = "the_wire_ball_spawner_force"
 	})
 
 	panel:AddControl("Slider", {
@@ -64,7 +64,7 @@ function TOOL.BuildCPanel( panel )
 	    Type = "Float",
 	    Min = "0",
 	    Max = "37650",
-	    Command = "hoverball_spawner_height"
+	    Command = "the_wire_ball_spawner_height"
 	})
 
 	panel:AddControl("Slider", {
@@ -72,7 +72,7 @@ function TOOL.BuildCPanel( panel )
 	    Type = "Float",
 	    Min = "0",
 	    Max = "30",
-	    Command = "hoverball_spawner_air_resistance"
+	    Command = "the_wire_ball_spawner_air_resistance"
 	})
 
 	panel:AddControl("Slider", {
@@ -80,19 +80,19 @@ function TOOL.BuildCPanel( panel )
 	    Type = "Float",
 	    Min = "0",
 	    Max = "120",
-	    Command = "hoverball_spawner_angular_damping"
+	    Command = "the_wire_ball_spawner_angular_damping"
 	})
 
 	panel:AddControl("checkbox", {
 		Label = "Hovers over water",
-		Command = "hoverball_spawner_detects_water"
+		Command = "the_wire_ball_spawner_detects_water"
 	})
 end
 if (CLIENT) then
-language.Add( "tool.hoverball_spawner.name", "Marum's Hoverball" )
-language.Add( "tool.hoverball_spawner.desc", "These hoverballs go up and down ramps and hills, like hovercrafts." )
+language.Add( "tool.hoverball_spawner.name", "Marum's Hoverball Wire Rendition" )
+language.Add( "tool.hoverball_spawner.desc", "These hoverballs go up and down ramps and hills, like hovercrafts. Wiremod compatible." )
 language.Add( "tool.hoverball_spawner.0", "Left-click: Spawn a hoverball. Spawn on an entity to weld it. Right-click to set a model." )
-language.Add( "undone.hoverball_spawner", "Undone Marum's hoverball" )
+language.Add( "undone.hoverball_spawner", "Undone Marum's wire hoverball" )
 end
 
 list.Set( "MarumsHoverballModels", "models/dav0r/hoverball.mdl", {} )
