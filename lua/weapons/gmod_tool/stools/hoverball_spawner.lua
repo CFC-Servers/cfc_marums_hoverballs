@@ -61,7 +61,7 @@ function TOOL.BuildCPanel( panel )
 	panel:AddControl("Slider", {
 	    Label = "Height",
 	    Type = "Float",
-	    Min = "5",
+	    Min = "0",
 	    Max = "32750",
 	    Command = "hoverball_spawner_height"
 	})
