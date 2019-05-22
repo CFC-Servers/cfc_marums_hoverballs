@@ -1,4 +1,4 @@
-TOOL.Category = "Posing"
+TOOL.Category = "Construction"
 TOOL.Name = "Wire Marums HoverBall"
 TOOL.Command = nil
 TOOL.ConfigName = "" --Setting this means that you do not have to create external configuration files to define the layout of the tool config-hud
@@ -27,7 +27,7 @@ function TOOL:LeftClick( trace )
 		if (IsValid(trace.Entity)) then
 			local weld = constraint.Weld( entity, trace.Entity, 0, trace.PhysicsBone, 0, true , false )
 		end
-		undo.Create( "Marums HoverBall" )
+		undo.Create( "Marums HoverBall Wire" )
 			undo.AddEntity( entity )
 			undo.SetPlayer( self:GetOwner() )
 		undo.Finish()
@@ -36,10 +36,9 @@ end
 
 function TOOL:RightClick( trace )
     if(trace.Hit) then
-        local enti = trace.Entity
-        if(enti and IsValid(enti) and !enti:isPlayer()) then
-            self:GetOwner():ChatPrint("Hoverball Model is now set to: " .. enti:GetModel())
-            TOOL.ClientConVar[ "model" ] = enti
+        if(trace.Entity and IsValid(enti) and !trace.Entity:isPlayer()) then
+            self:GetOwner():ChatPrint("Hoverball Model is now set to: " .. trace.Entity:GetModel())
+            TOOL.ClientConVar[ "model" ] = trace.Entity:GetModel()
         end
     end
 end
@@ -49,6 +48,8 @@ function TOOL.BuildCPanel( panel )
 	panel:AddControl("Header", { Text = "Client Options", Description = "HoverBall Model" })
 
 	panel:AddControl( "PropSelect", { Label = "Model", ConVar = "hoverball_spawner_model", Models = list.Get( "MarumsHoverballModels" ), Height = 5 } )
+
+	panel:AddControl("Header", { Text = "Client Options", Description = "HoverBall Settings" })
 
 	panel:AddControl("Slider", {
 	    Label = "Force",
@@ -62,9 +63,10 @@ function TOOL.BuildCPanel( panel )
 	    Label = "Height",
 	    Type = "Float",
 	    Min = "0",
-	    Max = "32750",
+	    Max = "37650",
 	    Command = "hoverball_spawner_height"
 	})
+
 	panel:AddControl("Slider", {
 	    Label = "Air Resistance",
 	    Type = "Float",
@@ -72,6 +74,7 @@ function TOOL.BuildCPanel( panel )
 	    Max = "30",
 	    Command = "hoverball_spawner_air_resistance"
 	})
+
 	panel:AddControl("Slider", {
 	    Label = "Angular Damping",
 	    Type = "Float",
@@ -79,17 +82,11 @@ function TOOL.BuildCPanel( panel )
 	    Max = "120",
 	    Command = "hoverball_spawner_angular_damping"
 	})
+
 	panel:AddControl("checkbox", {
 		Label = "Hovers over water",
 		Command = "hoverball_spawner_detects_water"
 	})
-end
-
-function toolGunEffect( trace, self )
-    local effectdata = EffectData()
-	effectdata:SetOrigin( trace.HitPos )
-	effectdata:SetStart( self:GetOwner():GetShootPos() )
-	util.Effect( "ToolTracer", effectdata )
 end
 if (CLIENT) then
 language.Add( "tool.hoverball_spawner.name", "Marum's Hoverball" )
