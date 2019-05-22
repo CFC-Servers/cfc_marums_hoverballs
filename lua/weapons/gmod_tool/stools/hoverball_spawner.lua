@@ -53,8 +53,8 @@ function TOOL.BuildCPanel( panel )
 	panel:AddControl("Slider", {
 	    Label = "Force",
 	    Type = "Float",
-	    Min = "5",
-	    Max = "1000",
+	    Min = "0",
+	    Max = "2500",
 	    Command = "hoverball_spawner_force"
 	})
 
@@ -62,7 +62,7 @@ function TOOL.BuildCPanel( panel )
 	    Label = "Height",
 	    Type = "Float",
 	    Min = "5",
-	    Max = "1500",
+	    Max = "32750",
 	    Command = "hoverball_spawner_height"
 	})
 	panel:AddControl("Slider", {
@@ -76,7 +76,7 @@ function TOOL.BuildCPanel( panel )
 	    Label = "Angular Damping",
 	    Type = "Float",
 	    Min = "0",
-	    Max = "100",
+	    Max = "120",
 	    Command = "hoverball_spawner_angular_damping"
 	})
 	panel:AddControl("checkbox", {
