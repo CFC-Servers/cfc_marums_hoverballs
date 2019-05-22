@@ -38,7 +38,7 @@ function TOOL:RightClick( trace )
     if(trace.Hit) then
         if(trace.Entity and IsValid(trace.Entity) and !trace.Entity:IsPlayer()) then
             self:GetOwner():ChatPrint("Hoverball Model is now set to: " .. trace.Entity:GetModel())
-            TOOL.ClientConVar[ "model" ] = trace.Entity
+			self:GetOwner():ConCommand("the_wire_ball_spawner_model " .. trace.Entity:GetModel())
         end
     end
 end
