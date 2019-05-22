@@ -89,10 +89,10 @@ function TOOL.BuildCPanel( panel )
 	})
 end
 if (CLIENT) then
-language.Add( "tool.hoverball_spawner.name", "Marum's Hoverball Wire Rendition" )
-language.Add( "tool.hoverball_spawner.desc", "These hoverballs go up and down ramps and hills, like hovercrafts. Wiremod compatible." )
-language.Add( "tool.hoverball_spawner.0", "Left-click: Spawn a hoverball. Spawn on an entity to weld it. Right-click to set a model." )
-language.Add( "undone.hoverball_spawner", "Undone Marum's wire hoverball" )
+language.Add( "tool.the_wire_ball_spawner.name", "Marum's Hoverball Wire Rendition" )
+language.Add( "tool.the_wire_ball_spawner.desc", "These hoverballs go up and down ramps and hills, like hovercrafts. Wiremod compatible." )
+language.Add( "tool.the_wire_ball_spawner.0", "Left-click: Spawn a hoverball. Spawn on an entity to weld it. Right-click to set a model." )
+language.Add( "undone.the_wire_ball_spawner", "Undone Marum's wire hoverball" )
 end
 
 list.Set( "MarumsHoverballModels", "models/dav0r/hoverball.mdl", {} )
