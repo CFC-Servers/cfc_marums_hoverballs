@@ -1,8 +1,8 @@
 ENT.Type = "anim"
 if WireLib then
-	ENT.Base 			= "base_wire_entity"
+    ENT.Base = "base_wire_entity"
 else
-	ENT.Base			= "base_gmodentity"
+    ENT.Base = "base_gmodentity"
 end
 
 ENT.Category = "Marums pack Wire Rendition"
