@@ -33,7 +33,23 @@ function ENT:Initialize()
         phys:SetDamping( 0.4, 1 )
         phys:SetMass(50)
     end
+    local options = {
+        hoverdistance = self.hoverdistance,
+        hoverforce    =  self.hoverforce,
+        damping       =  self.damping,
+        rotdamping    =  self.rotdamping,
+        detectswater  =  self.detectswater
+    }
+
+    duplicator.StoreEntityModifier( self, "cfc_marums_hoverball_options", options )
 end
+
+local function applyModifiers(ply, entity, data)
+   if not data then return end
+   table.Merge(entity, data)
+end
+
+duplicator.RegisterEntityModifier( "cfc_marums_hoverball_options", applyModifiers)
 
 --function ENT:Think()
 --  self.constrainedEntities = constraint.GetAllConstrainedEntities( self )
