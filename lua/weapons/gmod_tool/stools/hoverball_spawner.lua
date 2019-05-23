@@ -13,82 +13,82 @@ TOOL.ClientConVar[ "model" ] = "models/dav0r/hoverball.mdl"
 local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL:LeftClick( trace )
-	local model = self:GetClientInfo( "model" )
-	if (SERVER) then
-		local entity = ents.Create( "marums_hoverball" )
-		entity:SetPos( trace.HitPos )
-		entity.hoverdistance = 		self:GetClientNumber( "height" )
-		entity.hoverforce = 		self:GetClientNumber( "force" )
-		entity.damping = 			self:GetClientNumber( "air_resistance" )
-		entity.rotdamping = 		self:GetClientNumber( "angular_damping" )
-		entity.detectswater = 		self:GetClientNumber( "detects_water" )
-		entity:SetModel(			self:GetClientInfo(   "model" ) )
-		entity:Spawn()
-		if (IsValid(trace.Entity)) then
-			local weld = constraint.Weld( entity, trace.Entity, 0, trace.PhysicsBone, 0, true , false )
-		end
-		undo.Create( "Marums HoverBall" )
-			undo.AddEntity( entity )
-			undo.SetPlayer( self:GetOwner() )
-		undo.Finish()
-	end
+    local model = self:GetClientInfo( "model" )
+    if (SERVER) then
+        local entity = ents.Create( "marums_hoverball" )
+        entity:SetPos( trace.HitPos )
+        entity.hoverdistance =      self:GetClientNumber( "height" )
+        entity.hoverforce =         self:GetClientNumber( "force" )
+        entity.damping =            self:GetClientNumber( "air_resistance" )
+        entity.rotdamping =         self:GetClientNumber( "angular_damping" )
+        entity.detectswater =       self:GetClientNumber( "detects_water" )
+        entity:SetModel(            self:GetClientInfo(   "model" ) )
+        entity:Spawn()
+        if (IsValid(trace.Entity)) then
+            local weld = constraint.Weld( entity, trace.Entity, 0, trace.PhysicsBone, 0, true , false )
+        end
+        undo.Create( "Marums HoverBall" )
+            undo.AddEntity( entity )
+            undo.SetPlayer( self:GetOwner() )
+        undo.Finish()
+    end
 end
 
 function TOOL:RightClick( trace )
-	
+    
 end
 
 function TOOL.BuildCPanel( panel )
 
-	panel:AddControl("Header", { Text = "Client Options", Description = "HoverBall Model" })
+    panel:AddControl("Header", { Text = "Client Options", Description = "HoverBall Model" })
 
-	panel:AddControl( "PropSelect", { Label = "Model", ConVar = "hoverball_spawner_model", Models = list.Get( "MarumsHoverballModels" ), Height = 5 } )
+    panel:AddControl( "PropSelect", { Label = "Model", ConVar = "hoverball_spawner_model", Models = list.Get( "MarumsHoverballModels" ), Height = 5 } )
 
-	panel:AddControl("Header", { Text = "Client Options", Description = "HoverBall Settings" })
+    panel:AddControl("Header", { Text = "Client Options", Description = "HoverBall Settings" })
  
-	panel:AddControl("Slider", {
-	    Label = "Force",
-	    Type = "Float",
-	    Min = "5",
-	    Max = "1000",
-	    Command = "hoverball_spawner_force"
-	})
-	
-	panel:AddControl("Slider", {
-	    Label = "Height",
-	    Type = "Float",
-	    Min = "5",
-	    Max = "1500",
-	    Command = "hoverball_spawner_height"
-	})
+    panel:AddControl("Slider", {
+        Label = "Force",
+        Type = "Float",
+        Min = "5",
+        Max = "1000",
+        Command = "hoverball_spawner_force"
+    })
+    
+    panel:AddControl("Slider", {
+        Label = "Height",
+        Type = "Float",
+        Min = "5",
+        Max = "1500",
+        Command = "hoverball_spawner_height"
+    })
 
-	panel:AddControl("Slider", {
-	    Label = "Air Resistance",
-	    Type = "Float",
-	    Min = "0",
-	    Max = "30",
-	    Command = "hoverball_spawner_air_resistance"
-	})
-	
-	panel:AddControl("Slider", {
-	    Label = "Angular Damping",
-	    Type = "Float",
-	    Min = "0",
-	    Max = "100",
-	    Command = "hoverball_spawner_angular_damping"
-	})
+    panel:AddControl("Slider", {
+        Label = "Air Resistance",
+        Type = "Float",
+        Min = "0",
+        Max = "30",
+        Command = "hoverball_spawner_air_resistance"
+    })
+    
+    panel:AddControl("Slider", {
+        Label = "Angular Damping",
+        Type = "Float",
+        Min = "0",
+        Max = "100",
+        Command = "hoverball_spawner_angular_damping"
+    })
 
-	panel:AddControl("checkbox", {
-		Label = "Hovers over water",
-		Command = "hoverball_spawner_detects_water"
-	})
+    panel:AddControl("checkbox", {
+        Label = "Hovers over water",
+        Command = "hoverball_spawner_detects_water"
+    })
 end
 
 function toolGunEffect( trace, self ) 
     local effectdata = EffectData()
-	effectdata:SetOrigin( trace.HitPos )
-	effectdata:SetStart( self:GetOwner():GetShootPos() )
-	util.Effect( "ToolTracer", effectdata )
+    effectdata:SetOrigin( trace.HitPos )
+    effectdata:SetStart( self:GetOwner():GetShootPos() )
+    util.Effect( "ToolTracer", effectdata )
 end 
 if (CLIENT) then
 language.Add( "tool.hoverball_spawner.name", "Marum's Hoverball" )
