@@ -63,6 +63,12 @@ duplicator.RegisterEntityModifier( "cfc_marums_hoverball_options", applyModifier
 --  self:NextThink(CurTime()+1)
 --  return true
 --end
+local function traceFilter( ent )
+    if ent:GetClass() == "prop_physics" then
+        return false
+    end
+end
+
 
 function ENT:PhysicsUpdate()
 
@@ -75,17 +81,19 @@ function ENT:PhysicsUpdate()
     if not ( self.damping and self.rotdamping ) then return end
     
     phys:SetDamping( self.damping, self.rotdamping )
+    local startpos = self:GetPos()
+    local endpos = self:GetPos() - Vector(0, 0, hoverdistance * 2 )
 
     local tr = util.TraceLine{
-        start = self:GetPos(),
-        endpos = self:GetPos() + Vector(0, 0, -hoverdistance * 2 ),
-        filter = function( ent ) if ( ent:GetClass() == "prop_physics" ) then return false end end,
+        start = startpos,
+        endpos = endpos,
+        filter = traceFilter,
         mask = detectmask
     }
 
     local distance = self:GetPos():Distance( tr.HitPos )
     
-    if (distance < hoverdistance) then
+    if distance < hoverdistance then
         force = -(distance-hoverdistance)*hoverforce
         phys:ApplyForceCenter(Vector(0,0,-phys:GetVelocity().z*8))
     else
