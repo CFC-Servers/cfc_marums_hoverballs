@@ -1,7 +1,7 @@
 TOOL.Category = "Construction"
 TOOL.Name = "Marums HoverBall"
 TOOL.Command = nil
-TOOL.ConfigName = "" --Setting this means that you do not have to create external configuration files to define the layout of the tool config-hud
+TOOL.ConfigName = "" --Setting this means that you do not have to create external configuration files to define the layout of the tool config-hud 
 
 TOOL.ClientConVar[ "force" ] = "100"
 TOOL.ClientConVar[ "height" ] = "100"
@@ -29,7 +29,6 @@ function TOOL:LeftClick( trace )
         if (IsValid(trace.Entity)) then
             local weld = constraint.Weld( entity, trace.Entity, 0, trace.PhysicsBone, 0, true , false )
         end
-            self:GetOwner():AddCount( "Marums Hovers", entity )
             self:GetOwner():AddCleanup( "Marums Hovers", entity )
         undo.Create( "Marums HoverBall" )
             undo.AddEntity( entity )
