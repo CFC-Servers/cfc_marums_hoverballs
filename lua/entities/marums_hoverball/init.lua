@@ -24,15 +24,17 @@ function ENT:Initialize()
     --else
     --  --self.constrainedEntities = {self}
     --end
-    if (self.detectswater) then
+    if self.detectswater then
         self.mask = self.mask+MASK_WATER
     end
+
     local phys = self:GetPhysicsObject()
-    if (phys:IsValid()) then
+    if phys:IsValid() then
         phys:Wake()
         phys:SetDamping( 0.4, 1 )
         phys:SetMass(50)
     end
+
     local options = {
         hoverdistance = self.hoverdistance,
         hoverforce    =  self.hoverforce,
@@ -73,14 +75,15 @@ function ENT:PhysicsUpdate()
     if not ( self.damping and self.rotdamping ) then return end
     
     phys:SetDamping( self.damping, self.rotdamping )
-    local tr = util.TraceLine( {
-    start = self:GetPos(),
-    endpos = self:GetPos()+Vector(0,0,-hoverdistance*2),
-    filter = function( ent ) if ( ent:GetClass() == "prop_physics" ) then return false end end,
-    mask = detectmask
-    } )
 
-    local distance = self:GetPos():Distance(tr.HitPos)
+    local tr = util.TraceLine{
+        start = self:GetPos(),
+        endpos = self:GetPos() + Vector(0, 0, -hoverdistance * 2 ),
+        filter = function( ent ) if ( ent:GetClass() == "prop_physics" ) then return false end end,
+        mask = detectmask
+    }
+
+    local distance = self:GetPos():Distance( tr.HitPos )
     
     if (distance < hoverdistance) then
         force = -(distance-hoverdistance)*hoverforce
@@ -89,10 +92,10 @@ function ENT:PhysicsUpdate()
         force = 0
     end
     
-    if (force > self.delayedForce) then
-        self.delayedForce = (self.delayedForce*2+force)/3
+    if force > self.delayedForce then
+        self.delayedForce = (self.delayedForce * 2 + force)/3
     else
-        self.delayedForce = self.delayedForce*0.7
+        self.delayedForce = self.delayedForce * 0.7
     end
-    phys:ApplyForceCenter(Vector(0,0,self.delayedForce))
+    phys:ApplyForceCenter( Vector( 0, 0, self.delayedForce ) )
 end
