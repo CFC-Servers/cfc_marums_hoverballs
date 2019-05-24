@@ -27,7 +27,7 @@ function TOOL:LeftClick( trace )
         entity.detectswater =       self:GetClientNumber( "detects_water" )
         entity:SetModel(            self:GetClientInfo(   "model" ) )
         entity:Spawn()
-        if IsValid(trace.Entity) then
+        if IsValid( trace.Entity ) then
             local weld = constraint.Weld( entity, trace.Entity, 0, trace.PhysicsBone, 0, true , false )
         end
 
