@@ -1,4 +1,5 @@
 TOOL.Category = "Construction"
+
 TOOL.Name = "Marums Wire HoverBall"
 TOOL.Command = nil
 TOOL.ConfigName = "" --Setting this means that you do not have to create external configuration files to define the layout of the tool config-hud
@@ -27,6 +28,7 @@ function TOOL:LeftClick( trace )
         if (IsValid(trace.Entity)) then
             local weld = constraint.Weld( entity, trace.Entity, 0, trace.PhysicsBone, 0, true , false )
         end
+    
         undo.Create( "Marums Wire HoverBall" )
             undo.AddEntity( entity )
             undo.SetPlayer( self:GetOwner() )
@@ -95,6 +97,7 @@ function toolGunEffect( trace, self )
     effectdata:SetStart( self:GetOwner():GetShootPos() )
     util.Effect( "ToolTracer", effectdata )
 end
+
 if (CLIENT) then
 language.Add( "tool.hoverball_spawner.name", "Marum's Hoverball Wire Rendition" )
 language.Add( "tool.hoverball_spawner.desc", "These hoverballs go up and down ramps and hills, like hovercrafts. Wiremod compatible." )

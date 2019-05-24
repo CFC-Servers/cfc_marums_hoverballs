@@ -1,6 +1,5 @@
 AddCSLuaFile( "cl_init.lua" ) -- Make sure clientside
 AddCSLuaFile( "shared.lua" )  -- and shared scripts are sent.
-
 include('shared.lua')
 
 function ENT:Initialize()
@@ -31,11 +30,10 @@ function ENT:Initialize()
         phys:SetDamping( 0.4, 1 )
         phys:SetMass(50)
     end
-
     if WireLib then
         self.Inputs = WireLib.CreateInputs( self.Entity, self.wireCInputs)
     end
-
+  
     local options = {
         hoverdistance = self.hoverdistance,
         hoverforce    =  self.hoverforce,
@@ -97,7 +95,7 @@ function ENT:PhysicsUpdate()
     local detectmask = self.masker
 
     if not ( self.damping and self.rotdamping ) then return end
-
+    
     phys:SetDamping( self.damping, self.rotdamping )
     local tr = util.TraceLine( {
     start = self:GetPos(),
@@ -114,7 +112,7 @@ function ENT:PhysicsUpdate()
     else
         force = 0
     end
-
+  
     if (force > self.delayedForce) then
         self.delayedForce = (self.delayedForce*2+force)/3
     else
