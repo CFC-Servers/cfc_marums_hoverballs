@@ -12,6 +12,8 @@ TOOL.ClientConVar[ "model" ] = "models/dav0r/hoverball.mdl"
 
 local ConVarsDefault = TOOL:BuildConVarList()
 
+cleanup.Register( "Marums Hovers" )
+
 function TOOL:LeftClick( trace )
     local model = self:GetClientInfo( "model" )
     if (SERVER) then
@@ -27,6 +29,7 @@ function TOOL:LeftClick( trace )
         if (IsValid(trace.Entity)) then
             local weld = constraint.Weld( entity, trace.Entity, 0, trace.PhysicsBone, 0, true , false )
         end
+        self:GetOwner():AddCleanup( "Marums Hovers", entity )
         undo.Create( "Marums HoverBall" )
             undo.AddEntity( entity )
             undo.SetPlayer( self:GetOwner() )
