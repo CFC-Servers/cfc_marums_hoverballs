@@ -83,7 +83,7 @@ function ENT:PhysicsUpdate()
     phys:SetDamping( self.damping, self.rotdamping )
     local hoverOffset
 
-    local traceDirection = Vector(0,0,2)
+    local traceDirection = Vector( 0, 0, 2 )
     local startpos = self:GetPos()
     local endpos = self:GetPos() - traceDirection * hoverdistance
 
@@ -97,8 +97,8 @@ function ENT:PhysicsUpdate()
     local distance = self:GetPos():Distance( tr.HitPos )
     
     if distance < hoverdistance then
-        force = -(distance-hoverdistance)*hoverforce
-        phys:ApplyForceCenter(Vector(0,0,-phys:GetVelocity().z*8))
+        force = -(distance - hoverdistance) * hoverforce
+        phys:ApplyForceCenter( Vector( 0, 0, -phys:GetVelocity().z * 8 ) )
     else
         force = 0
     end
