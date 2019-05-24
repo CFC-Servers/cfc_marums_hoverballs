@@ -12,11 +12,12 @@ TOOL.ClientConVar[ "model" ] = "models/dav0r/hoverball.mdl"
 
 local ConVarsDefault = TOOL:BuildConVarList()
 
-cleanup.Register( "Marums Hovers" )
+cleanup.Register( "marums_hoverball" )
 
 function TOOL:LeftClick( trace )
     local model = self:GetClientInfo( "model" )
-    if (SERVER) then
+
+    if SERVER then
         local entity = ents.Create( "marums_hoverball" )
         entity:SetPos( trace.HitPos )
         entity.hoverdistance =      self:GetClientNumber( "height" )
@@ -26,10 +27,12 @@ function TOOL:LeftClick( trace )
         entity.detectswater =       self:GetClientNumber( "detects_water" )
         entity:SetModel(            self:GetClientInfo(   "model" ) )
         entity:Spawn()
-        if (IsValid(trace.Entity)) then
+        if IsValid(trace.Entity) then
             local weld = constraint.Weld( entity, trace.Entity, 0, trace.PhysicsBone, 0, true , false )
         end
-        self:GetOwner():AddCleanup( "Marums Hovers", entity )
+
+        self:GetOwner():AddCleanup( "marums_hoverball", entity )
+
         undo.Create( "Marums HoverBall" )
             undo.AddEntity( entity )
             undo.SetPlayer( self:GetOwner() )
@@ -93,11 +96,14 @@ function toolGunEffect( trace, self )
     effectdata:SetStart( self:GetOwner():GetShootPos() )
     util.Effect( "ToolTracer", effectdata )
 end
-if (CLIENT) then
-language.Add( "tool.hoverball_spawner.name", "Marum's Hoverball" )
-language.Add( "tool.hoverball_spawner.desc", "These hoverballs go up and down ramps and hills, like hovercrafts." )
-language.Add( "tool.hoverball_spawner.0", "Left-click: Spawn a hoverball. Spawn on an entity to weld it." )
-language.Add( "undone.hoverball_spawner", "Undone Marum's hoverball" )
+
+if CLIENT then
+    language.Add( "Cleanup_marums_hoverball", "Marums Hoverballs" )
+    language.Add( "Cleaned_marums_hoverball", "Cleaned up Marums Hoverballs" )
+    language.Add( "tool.hoverball_spawner.name", "Marum's Hoverball" )
+    language.Add( "tool.hoverball_spawner.desc", "These hoverballs go up and down ramps and hills, like hovercrafts." )
+    language.Add( "tool.hoverball_spawner.0", "Left-click: Spawn a hoverball. Spawn on an entity to weld it." )
+    language.Add( "undone.hoverball_spawner", "Undone Marum's hoverball" )
 end
 
 list.Set( "MarumsHoverballModels", "models/dav0r/hoverball.mdl", {} )
