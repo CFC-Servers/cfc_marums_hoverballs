@@ -12,7 +12,7 @@ TOOL.ClientConVar[ "model" ] = "models/dav0r/hoverball.mdl"
 
 local ConVarsDefault = TOOL:BuildConVarList()
 
-cleanup.Register( "Marums Hovers" ) -- https://github.com/Facepunch/garrysmod/blob/master/garrysmod/gamemodes/sandbox/entities/weapons/gmod_tool/stools/hoverball.lua
+cleanup.Register( "Marums Hovers" )
 
 function TOOL:LeftClick( trace )
     local model = self:GetClientInfo( "model" )
