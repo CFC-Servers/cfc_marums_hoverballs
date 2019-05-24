@@ -1,8 +1,7 @@
 AddCSLuaFile( "cl_init.lua" ) -- Make sure clientside
 AddCSLuaFile( "shared.lua" )  -- and shared scripts are sent.
- 
 include('shared.lua')
- 
+
 function ENT:Initialize()
 
     --self:SetModel( "models/dav0r/hoverball.mdl" )
@@ -10,7 +9,7 @@ function ENT:Initialize()
     self:PhysicsInit( SOLID_VPHYSICS )      -- Make us work with physics,
     self:SetMoveType( MOVETYPE_VPHYSICS )   -- after all, gmod is a physics
     self:SetSolid( SOLID_VPHYSICS )         -- Toolbox
-    self:SetCollisionGroup(COLLISION_GROUP_DISSOLVING)
+    --self:SetCollisionGroup(COLLISION_GROUP_DISSOLVING) --Why do we need this?
     self.delayedForce = 0
     --self.hoverdistance = cvars.Number( "mhb_height" )
     --self.hoverforce = cvars.Number( "mhb_force" )
@@ -69,9 +68,9 @@ function ENT:PhysicsUpdate()
     local force = 0
     local phys = self:GetPhysicsObject()
     local detectmask = self.mask
-    
+
     if not ( self.damping and self.rotdamping ) then return end
-    
+
     phys:SetDamping( self.damping, self.rotdamping )
     local tr = util.TraceLine( {
     start = self:GetPos(),
@@ -81,14 +80,14 @@ function ENT:PhysicsUpdate()
     } )
 
     local distance = self:GetPos():Distance(tr.HitPos)
-    
+
     if (distance < hoverdistance) then
         force = -(distance-hoverdistance)*hoverforce
         phys:ApplyForceCenter(Vector(0,0,-phys:GetVelocity().z*8))
     else
         force = 0
     end
-    
+
     if (force > self.delayedForce) then
         self.delayedForce = (self.delayedForce*2+force)/3
     else
