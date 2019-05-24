@@ -9,7 +9,7 @@ function ENT:Initialize()
     self:PhysicsInit( SOLID_VPHYSICS )      -- Make us work with physics,
     self:SetMoveType( MOVETYPE_VPHYSICS )   -- after all, gmod is a physics
     self:SetSolid( SOLID_VPHYSICS )         -- Toolbox
-    --self:SetCollisionGroup(COLLISION_GROUP_DISSOLVING) --Why do we need this?
+    self:SetCollisionGroup(COLLISION_GROUP_DISSOLVING) --Why do we need this?
     self.delayedForce = 0
     --self.hoverdistance = cvars.Number( "mhb_height" )
     --self.hoverforce = cvars.Number( "mhb_force" )
