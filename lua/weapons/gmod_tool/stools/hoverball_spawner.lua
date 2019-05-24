@@ -29,7 +29,7 @@ function TOOL:LeftClick( trace )
         if (IsValid(trace.Entity)) then
             local weld = constraint.Weld( entity, trace.Entity, 0, trace.PhysicsBone, 0, true , false )
         end
-            self:GetOwner():AddCleanup( "Marums Hovers", entity )
+        self:GetOwner():AddCleanup( "Marums Hovers", entity )
         undo.Create( "Marums HoverBall" )
             undo.AddEntity( entity )
             undo.SetPlayer( self:GetOwner() )
