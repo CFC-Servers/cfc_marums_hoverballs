@@ -81,8 +81,11 @@ function ENT:PhysicsUpdate()
     if not ( self.damping and self.rotdamping ) then return end
     
     phys:SetDamping( self.damping, self.rotdamping )
+    local hoverOffset
+
+    local traceDirection = Vector(0,0,2)
     local startpos = self:GetPos()
-    local endpos = self:GetPos() - Vector(0, 0, hoverdistance * 2 )
+    local endpos = self:GetPos() - traceDirection * hoverdistance
 
     local tr = util.TraceLine{
         start = startpos,
