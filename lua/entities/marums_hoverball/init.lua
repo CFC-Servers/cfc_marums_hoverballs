@@ -94,7 +94,7 @@ function ENT:PhysicsUpdate()
     local hoverforce = self.hoverforce
     local force = 0
     local phys = self:GetPhysicsObject()
-    local detectmask = self.mask
+    local detectmask = self.masker
 
     if not ( self.damping and self.rotdamping ) then return end
 
