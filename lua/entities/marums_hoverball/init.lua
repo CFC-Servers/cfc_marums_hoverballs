@@ -6,26 +6,14 @@ include('shared.lua')
 local wireInputs = {}
 
 function ENT:Initialize()
-
-    --self:SetModel( "models/dav0r/hoverball.mdl" )
-    --self:SetModel( self.model )
     self:PhysicsInit( SOLID_VPHYSICS )      -- Make us work with physics,
     self:SetMoveType( MOVETYPE_VPHYSICS )   -- after all, gmod is a physics
     self:SetSolid( SOLID_VPHYSICS )         -- Toolbox
     self:SetCollisionGroup(COLLISION_GROUP_DISSOLVING)
     self.delayedForce = 0
-    --self.hoverdistance = cvars.Number( "mhb_height" )
-    --self.hoverforce = cvars.Number( "mhb_force" )
-    --self.damping = cvars.Number( "mhb_air_resistance" )
-    --self.rotdamping = cvars.Number( "mhb_angular_damping" )
-    --self.detectswater = cvars.Bool( "mhb_detects_water" )
+
     self.mask = MASK_NPCWORLDSTATIC
-    --self.constrainedEntities = constraint.GetAllConstrainedEntities( self )
-    --if (istable(self.constrainedEntities)) then
-    --  table.insert(self.constrainedEntities, self)
-    --else
-    --  --self.constrainedEntities = {self}
-    --end
+
     if self.detectswater then
         self.mask = self.mask+MASK_WATER
     end
@@ -38,7 +26,7 @@ function ENT:Initialize()
     end
 
     local options = {
-        hoverdistance = self.hoverdistance,
+        hoverdistance =  self.hoverdistance,
         hoverforce    =  self.hoverforce,
         damping       =  self.damping,
         rotdamping    =  self.rotdamping,
@@ -57,16 +45,6 @@ end
 
 duplicator.RegisterEntityModifier( "cfc_marums_hoverball_options", applyModifiers)
 
---function ENT:Think()
---  self.constrainedEntities = constraint.GetAllConstrainedEntities( self )
---  if (istable(self.constrainedEntities)) then
---      table.insert(self.constrainedEntities, self)
---  else
---      self.constrainedEntities = {self}
---  end
---  self:NextThink(CurTime()+1)
---  return true
---end
 local function traceFilter( ent )
     if ent:GetClass() == "prop_physics" then
         return false
