@@ -35,7 +35,9 @@ function ENT:Initialize()
 
     duplicator.StoreEntityModifier( self, "cfc_marums_hoverball_options", options )
     local inputNames = table.GetKeys( wireInputs )
-    PrintTable( WireLib.CreateInputs( self, inputNames) )
+    if WireLib then 
+        WireLib.CreateInputs( self, inputNames)
+    end
 end
 
 local function applyModifiers(ply, entity, data)
