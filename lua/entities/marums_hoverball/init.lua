@@ -104,7 +104,7 @@ wireInputs["Height"] = function( ent, value )
 end
 
 wireInputs["Air Resistance"] = function( ent, value )
-    ent.rotdamping = value
+    ent.damping = value
 end
 
 wireInputs["Angular Damping"] = function( ent, value )
