@@ -1,12 +1,16 @@
 ENT.Type = "anim"
-ENT.Base = "base_gmodentity"
+if WireLib then
+    ENT.Base = "base_wire_entity"
+else
+    ENT.Base = "base_gmodentity"
+end
  
-ENT.Category = "Marums pack"
+ENT.Category = "Wired Stuff"
 
-ENT.PrintName= "Marums Hoverball"
-ENT.Author= "Marum"
-ENT.Contact= "don`t"
-ENT.Purpose= "Annoy"
-ENT.Instructions= "Hovers"
+ENT.PrintName= "Wire Marums Hoverball"
+ENT.Author= "Marum Logica CFC"
+ENT.Contact= "Logica Steam : https://steamcommunity.com/id/GetLogical/"
+ENT.Purpose= "Better hoverballs, with wire support."
+ENT.Instructions= "It just hovers"
 ENT.Spawnable = true
 ENT.AdminSpawnable = false

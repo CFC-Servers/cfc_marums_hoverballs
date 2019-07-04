@@ -1,0 +1,11 @@
+{
+	"title"		:	"Wiremod Marums Hoverballs",
+	"type"		:	"tool",
+	"tags"		:	[ "build" ],
+	"ignore"	:
+	[
+		"*.md",
+		"*.git*",
+		"*.txt"
+	]
+}
