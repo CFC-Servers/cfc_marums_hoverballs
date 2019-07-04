@@ -2,7 +2,9 @@ AddCSLuaFile( "cl_init.lua" ) -- Make sure clientside
 AddCSLuaFile( "shared.lua" )  -- and shared scripts are sent.
  
 include('shared.lua')
- 
+-- wiremod inputs
+local wireInputs = {}
+
 function ENT:Initialize()
 
     --self:SetModel( "models/dav0r/hoverball.mdl" )
@@ -44,6 +46,8 @@ function ENT:Initialize()
     }
 
     duplicator.StoreEntityModifier( self, "cfc_marums_hoverball_options", options )
+    local inputNames = table.GetKeys( wireInputs )
+    PrintTable( WireLib.CreateInputs( self, inputNames) )
 end
 
 local function applyModifiers(ply, entity, data)
@@ -109,4 +113,29 @@ function ENT:PhysicsUpdate()
         self.delayedForce = self.delayedForce * 0.7
     end
     phys:ApplyForceCenter( Vector( 0, 0, self.delayedForce ) )
+end
+
+-- define inputs
+
+wireInputs["Force"] = function( ent, value )
+    ent.hoverforce = value
+end
+
+wireInputs["Height"] = function( ent, value )
+    ent.hoverdistance = value
+end
+
+wireInputs["Air Resistance"] = function( ent, value )
+    ent.rotdamping = value
+end
+
+wireInputs["Angular Damping"] = function( ent, value )
+    ent.rotdamping = value
+end
+
+function ENT:TriggerInput( iname, value )
+    local inputFunction = wireInputs[iname]
+    if inputFunction then
+        inputFunction( self, value )
+    end
 end
